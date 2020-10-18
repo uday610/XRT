@@ -679,7 +679,7 @@ In C++, the timeout facility can be used by the same member function that takes 
 Graph
 -----
 
-In Versal ACAPs with AI Engines, the XRT Graph APIs can be used to dynamically load, monitor, and control the graphs executing on the AI Engine array. Currently only C APIs are present, with a plan of future development of C++ based graph control APIs. 
+In Versal ACAPs with AI Engines, the XRT Graph APIs can be used to dynamically load, monitor, and control the graphs executing on the AI Engine array. As of 2020.2 release, XRT provides a set of C APIs for graph control. The C++ APIs are planned for a future release. 
 
 Graph Opening and Closing
 ~~~~~~~~~~~~~~~~~~~~~~~~~
