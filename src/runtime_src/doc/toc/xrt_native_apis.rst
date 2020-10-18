@@ -681,3 +681,53 @@ Graph
 
 In Versal ACAPs with AI Engines, the XRT Graph APIs can be used to dynamically load, monitor, and control the graphs executing on the AI Engine array. Currently only C APIs are present, with a plan of future development of C++ based graph control APIs. 
 
+Graph Opening and Closing
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The XRT graph APIs support obtaining of graph handle from currently loaded xclbin. The required APIs for graph open and close are
+
+         - ``xrtGraphOpen``: API provides handle of the graph from the device, XCLBIN UUID and the graph name. 
+         - ``xrtGraphClose``: API to close the graph handle. 
+
+.. code:: c
+      :number-lines: 35
+           
+           xuid_t xclbin_uuid;
+           xrtXclbinGetUUID(xclbin,xclbin_uuid);
+
+           xrtGraphHandle graph = xrtGraphOpen(device, xclbin_uuid, "graph_name");
+           ....
+           ....
+           xrtGraphClose(graph);
+
+
+The graph handle obtained from ``xrtGraphOpen`` is used to execute the graph function on the AIE tiles.
+
+Graph execution
+~~~~~~~~~~~~~~~
+
+A graph should be executed only after it is initialized. The graph execution should be followed by an wait function. The required APIs are:
+
+    - `xrtGraphReset` can be used to reset a previously opened graph by disable tiles and enable tile reset. 
+    - `xrtGraphRun` can be used to execute the graph by enabling the tiles and disabling the tile reset. The API ``xrtGraphRun`` takes additional argiment that is used to specify the number of iteration of the graph execution. 
+    - xrtGraphWait
+    - xrtGraphWaitDone
+
+.. code:: c
+      :number-lines: 35
+      
+           ret = xrtGraphReset(graphHandle);
+           if (ret)
+                throw std::runtime_error("Unable to reset graph");
+
+           ret = xrtGraphRun(graphHandle, 1);
+
+
+The graph suspend and resume function
+
+    - xrtGraphSuspend
+    - xrtGraphResume
+    
+
+
+
