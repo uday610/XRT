@@ -675,3 +675,9 @@ The Run handle/object supports few other use-cases.
 In C++, the timeout facility can be used by the same member function that takes a ``std::chrono::milliseconds`` to specify the timeout. 
 
 **Asynchronous update of the kernel arguments**: The API ``xrtRunSetArg`` (C++: ``xrt::run::set_arg``) is synchronous to the kernel execution. This API can only be used when kernel is in the IDLE state and before the start of the next execution. An asynchronous version of this API (only for edge platform) ``xrtRunUpdateArg`` (in C++ member function ``xrt::run::update_arg``) is provided to change the kernel arguments asynchronous to the kernel execution. 
+
+Graph
+-----
+
+In Versal ACAPs with AI Engines, the XRT Graph APIs can be used to dynamically load, monitor, and control the graphs executing on the AI Engine array. Currently only C APIs are present, with a plan of future development of C++ based graph control APIs. 
+
