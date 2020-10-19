@@ -706,22 +706,27 @@ The graph handle obtained from ``xrtGraphOpen`` is used to execute the graph fun
 Graph execution
 ~~~~~~~~~~~~~~~
 
-A graph should be executed only after it is initialized. The graph execution should be followed by an wait function. The required APIs are:
+XRT provides basic graph execution control APIs to initialize, run, wait, and terminate graphs for a specific number of iterations.
 
-    - `xrtGraphReset` can be used to reset a previously opened graph by disable tiles and enable tile reset. 
-    - `xrtGraphRun` can be used to execute the graph by enabling the tiles and disabling the tile reset. The API ``xrtGraphRun`` takes additional argiment that is used to specify the number of iteration of the graph execution. 
-    - xrtGraphWait
-    - xrtGraphWaitDone
+    - `xrtGraphReset` : To initialize the graph 
+    - `xrtGraphRun`: To run the graph for a number of iterations or infinitely 
+    - xrtGraphWait : 
+    - xrtGraphWaitDone:
+    - `xrtGraphEnd`: 
 
 .. code:: c
       :number-lines: 35
       
-           ret = xrtGraphReset(graphHandle);
-           if (ret)
-                throw std::runtime_error("Unable to reset graph");
+           xrtGraphReset(graphHandle);
+           xrtGraphRun(graphHandle, 3);
+           xrtGraphWait(graphHandle,3); 
+           xrtGraphRun(graphHandle,5);
+           xrtGraphEnd(graphHandle,5); 
 
-           ret = xrtGraphRun(graphHandle, 1);
 
+In the above example, after initalizing the graph (API ``xrtGrapgReset``) the API ``xrtGraphRun`` is used for specific number of iterations. The ``xrtGraphWait`` blocks the execution until the number of iteration is done. The graph does not require reinitialization as long as ``xrtGraphWait`` API is used to wait for the iterations to finish. However, after the second exection for 5 iteration, the API ``xrtGraphEnd`` is used which has the same blocking behavior but needs reinialization if the the graph needed to executed again. 
+
+**Infinite Graph Execution**: The graph runs infinitely if 
 
 The graph suspend and resume function
 
