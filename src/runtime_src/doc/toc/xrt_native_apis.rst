@@ -708,25 +708,80 @@ Graph execution
 
 XRT provides basic graph execution control APIs to initialize, run, wait, and terminate graphs for a specific number of iterations.
 
-    - `xrtGraphReset` : To initialize the graph 
-    - `xrtGraphRun`: To run the graph for a number of iterations or infinitely 
+    - `xrtGraphReset` : To put the all tiles to reset state, 
+    - `xrtGraphRun`: To run the graph for a number of iterations (N) or infinitely (-1) 
     - xrtGraphWait : 
     - xrtGraphWaitDone:
     - `xrtGraphEnd`: 
 
 .. code:: c
       :number-lines: 35
-      
+           
+           // start from reset state
            xrtGraphReset(graphHandle);
+           
+           // run the graph for 3 iteration
            xrtGraphRun(graphHandle, 3);
-           xrtGraphWait(graphHandle,3); 
+           
+           // Wait till the graph is done 
+           xrtGraphWait(graphHandle,0);  // Use xrtGraphWait if you want to execute the graph again
+           
+           
            xrtGraphRun(graphHandle,5);
-           xrtGraphEnd(graphHandle,5); 
+           xrtGraphEnd(graphHandle,0);  // Use xrtGraphEnd if you are done with the graph execution
 
 
 In the above example, after initalizing the graph (API ``xrtGrapgReset``) the API ``xrtGraphRun`` is used for specific number of iterations. The ``xrtGraphWait`` blocks the execution until the number of iteration is done. The graph does not require reinitialization as long as ``xrtGraphWait`` API is used to wait for the iterations to finish. However, after the second exection for 5 iteration, the API ``xrtGraphEnd`` is used which has the same blocking behavior but needs reinialization if the the graph needed to executed again. 
 
-**Infinite Graph Execution**: The graph runs infinitely if 
+**Infinite Graph Execution**: The graph runs infinitely if xrtGraphRun is called with cycle argument -1
+
+
+.. code:: c
+      :number-lines: 35
+           
+           // start from reset state
+           xrtGraphReset(graphHandle);
+           
+           // run the graph infinitely
+           xrtGraphRun(graphHandle, -1);
+           
+           xrtGraphWait(graphHandle,3);  // Forcefully suspend the graph after 3 cycles starting from NOW
+           
+           
+           xrtGraphResume(graphHandle); // Restart the suspended graph again to run forever
+           
+           xrtGraphSuspend(graphHandle); // Suspend the graph immediately
+           
+           xrtGraphResume(graphHandle); // Restart the suspended graph again to run forever
+
+           
+           xrtGraphEnd(graphHandle,5);  // Forcefully end the graph operation after 5 more cycle starting from NOW
+
+
+
+.. code:: c
+      :number-lines: 35
+           
+           // start from reset state
+           xrtGraphReset(graphHandle);
+           
+           // run the graph for 100 iteration
+           xrtGraphRun(graphHandle, 100);
+           
+            while (1) {
+             auto rval  = xrtGraphWaitDone(graphHandle, 5); 
+              std::cout << "Wait for graph done returns: " << rval << std::endl;
+              if (rval == -ETIME)
+                   std::cout << "Timeout, reenter......" << std::endl;
+              else  // Graph is done, quit the loop
+                  break;
+             }
+
+           
+         
+           
+
+
 
 The graph suspend and resume function
 
@@ -734,5 +789,24 @@ The graph suspend and resume function
     - xrtGraphResume
     
 
+.. code:: c
+      :number-lines: 35
+           
+           // start from reset state
+           xrtGraphReset(graphHandle);
+           
+           begin_t = xrtGraphTimeStamp(graphHandle);
+           
+           // run the graph for 3 iteration
+           xrtGraphRun(graphHandle, 3);
+           
+           xrtGraphWait(graphHandle, 0); 
+           
+           end_t = xrtGraphTimeStamp(graphHandle);
+           
+           cout<<"Number of AIE cycles consumed in the 3 iteration is<< end_t-begin_t; 
+           
 
+           
+           
 
