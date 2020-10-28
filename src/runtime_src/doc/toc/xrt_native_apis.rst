@@ -706,13 +706,18 @@ The graph handle obtained from ``xrtGraphOpen`` is used to execute the graph fun
 Graph execution
 ~~~~~~~~~~~~~~~
 
-XRT provides basic graph execution control APIs to initialize, run, wait, and terminate graphs for a specific number of iterations.
+XRT provides basic graph execution control APIs to initialize, run, wait, and terminate graphs for a specific number of iterations. Below we will review some of the common graph execution style
 
-    - `xrtGraphReset` : To put the all tiles to reset state, 
-    - `xrtGraphRun`: To run the graph for a number of iterations (N) or infinitely (-1) 
-    - xrtGraphWait : 
-    - xrtGraphWaitDone:
-    - `xrtGraphEnd`: 
+**Graph execution for fixed number of iteration**
+
+The graph can be executed for a fixed number of iteration by ``xrtGraphRun`` API using a iteration argument. Subsequently ``xrtGraphWait`` or ``xrtGraphEnd`` API should be used to ensure the graph execution is finished. Remember to use ``xrtGraphWait`` and ``xrtGraphEnd`` API with argument 0. 
+
+Let's review the below example
+
+- Graph is executed for 3 iteration
+- The API `xrtGraphWait(graphHandle,0)` is used to wait till the iteration is done. The API `xrtGraphAPI` is used because host code need to execute the graph again without a reset
+- The Graph is executed again for 5 iteration
+- The API `xrtGraphEnd(graphHandle,0) is used to wait till the iteration is done. 
 
 .. code:: c
       :number-lines: 35
@@ -731,9 +736,16 @@ XRT provides basic graph execution control APIs to initialize, run, wait, and te
            xrtGraphEnd(graphHandle,0);  // Use xrtGraphEnd if you are done with the graph execution
 
 
-In the above example, after initalizing the graph (API ``xrtGrapgReset``) the API ``xrtGraphRun`` is used for specific number of iterations. The ``xrtGraphWait`` blocks the execution until the number of iteration is done. The graph does not require reinitialization as long as ``xrtGraphWait`` API is used to wait for the iterations to finish. However, after the second exection for 5 iteration, the API ``xrtGraphEnd`` is used which has the same blocking behavior but needs reinialization if the the graph needed to executed again. 
 
-**Infinite Graph Execution**: The graph runs infinitely if xrtGraphRun is called with cycle argument -1
+**Infinite Graph Execution**: The graph runs infinitely if xrtGraphRun is called with cycle argument -1. While a graph running infinitely the APIs ``xrtGraphWait``, ``xrtGraphSuspend`` and xrtGrapgEnd can be used to end the graph operation after some number of iteration. The API ``xrtGraphResume`` is used to inoke the infitely running graph again. 
+
+- The API ``xrtGraphRun(graphHandle, -1)`` is used to execute the graph infinitely
+- The API ``xrtGraphWait`` is suspending the graph after 3 cycles from the current time when this API is applied
+ 
+     - What is behavior of xrtGraphWait(,0) , is it equivalent to xrtGraphSuspend?
+- The API ``xrtGraphResume`` is used to restart the suspended graph
+- The API ``xrtGraphSuspend`` is used to suspend the graph immediately
+- The API ``xrtGraphEnd(graphHandle,5)`` is used to end the graph operation after 5 more iteration in future. Using ``xrtGraphEnd`` eliminte the capability of rerunning the Graph without a reset. 
 
 
 .. code:: c
