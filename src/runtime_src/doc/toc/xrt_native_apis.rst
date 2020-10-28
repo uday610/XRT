@@ -708,7 +708,7 @@ Graph execution
 
 XRT provides basic graph execution control APIs to initialize, run, wait, and terminate graphs for a specific number of iterations. Below we will review some of the common graph execution style
 
-**Graph execution for fixed number of iteration**
+**Graph execution for fixed number of iteration and busy wait**
 
 The graph can be executed for a fixed number of iteration by ``xrtGraphRun`` API using a iteration argument. Subsequently ``xrtGraphWait`` or ``xrtGraphEnd`` API should be used to ensure the graph execution is finished. Remember to use ``xrtGraphWait`` and ``xrtGraphEnd`` API with argument 0. 
 
@@ -735,6 +735,30 @@ Let's review the below example
            xrtGraphRun(graphHandle,5);
            xrtGraphEnd(graphHandle,0);  // Use xrtGraphEnd if you are done with the graph execution
 
+
+**Graph wait timeout**
+
+As shown in the above example xrtGraphWait(graphHandle,0) performs a busy-wait and suspend the execution till the graph is not done. If desired a timeout version of the wait can be achieved by ``xrtGraphWaitDone`` which can be used to wait for some specified number of millisecond, and if the graph is not done do something else in the meantime. An example is shown below
+
+.. code:: c
+      :number-lines: 35
+           
+           // start from reset state
+           xrtGraphReset(graphHandle);
+           
+           // run the graph for 100 iteration
+           xrtGraphRun(graphHandle, 100);
+           
+            while (1) {
+             auto rval  = xrtGraphWaitDone(graphHandle, 5); 
+              std::cout << "Wait for graph done returns: " << rval << std::endl;
+              if (rval == -ETIME)  {
+                   std::cout << "Timeout, reenter......" << std::endl;
+                   // Do something 
+              }
+              else  // Graph is done, quit the loop
+                  break;
+             }
 
 
 **Infinite Graph Execution**: The graph runs infinitely if xrtGraphRun is called with cycle argument -1. While a graph running infinitely the APIs ``xrtGraphWait``, ``xrtGraphSuspend`` and xrtGrapgEnd can be used to end the graph operation after some number of iteration. The API ``xrtGraphResume`` is used to inoke the infitely running graph again. 
