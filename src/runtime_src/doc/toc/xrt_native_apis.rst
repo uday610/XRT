@@ -703,6 +703,28 @@ The XRT graph APIs support obtaining of graph handle from currently loaded xclbi
 
 The graph handle obtained from ``xrtGraphOpen`` is used to execute the graph function on the AIE tiles.
 
+Reset Functions
+~~~~~~~~~~~~~~~
+
+There are two reset functions are used:
+
+   - API ``xrtAIEResetArray`` is used to reset the whole AIE array. 
+   - API ``xrtGraphReset`` is used to reset a specified graph by disabling tiles and enable tile reset of the AIE engine. 
+
+
+.. code:: c
+      :number-lines: 35
+           
+           xrtDeviceHandle device_handle = xrtDeviceOpen(0);
+           ...
+           // AIE Array Reset
+           xrtAIEResetArray(device_handle)
+           
+           xrtGraphHandle graph = xrtGraphOpen(device, xclbin_uuid, "graph_name");
+           // Graph Reset
+           xrtGraphReset(graphHandle);
+
+
 Graph execution
 ~~~~~~~~~~~~~~~
 
@@ -719,7 +741,6 @@ The graph can be executed for a fixed number of iteration by ``xrtGraphRun`` API
 
 Let's review the below example
 
-- At the beginning API ``xrtGraphReset`` is used to reset the graph by disabling tiles and enable tile reset of the AIE engine. 
 - Graph is executed for 3 iteration by API ``xrtGraphRun`` with the number of iteration as an argument. 
 - The API ``xrtGraphWait(graphHandle,0)`` is used to wait till the iteration is done. The API `xrtGraphAPI` is used because host code need to execute the graph again without doing a reset
 - The Graph is executed again for 5 iteration
@@ -858,6 +879,8 @@ XRT provids the API to update and read the runtime paramater of the graph.
 In the above example, the API ``xrtGraphUpdateRTP`` and ``xrtGraphReadRTP`` are used to update and read the RTP values respectively. Note both the APIs accepts the hierarchical name of the RTL port, pointer to update and read the RTP values, and the size of the RTP value. 
 
 
+Data transfer from Global Memory
 
+Synchronize the buffer contents between GMIO and AIE.
            
 
