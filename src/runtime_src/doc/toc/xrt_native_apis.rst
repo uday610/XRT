@@ -719,10 +719,11 @@ The graph can be executed for a fixed number of iteration by ``xrtGraphRun`` API
 
 Let's review the below example
 
-- Graph is executed for 3 iteration
-- The API `xrtGraphWait(graphHandle,0)` is used to wait till the iteration is done. The API `xrtGraphAPI` is used because host code need to execute the graph again without a reset
+- At the beginning API ``xrtGraphReset`` is used to reset the graph by disabling tiles and enable tile reset of the AIE engine. 
+- Graph is executed for 3 iteration by API ``xrtGraphRun`` with the number of iteration as an argument. 
+- The API ``xrtGraphWait(graphHandle,0)`` is used to wait till the iteration is done. The API `xrtGraphAPI` is used because host code need to execute the graph again without doing a reset
 - The Graph is executed again for 5 iteration
-- The API `xrtGraphEnd(graphHandle,0) is used to wait till the iteration is done. 
+- The API ``xrtGraphEnd(graphHandle,0)`` is used to wait till the iteration is done. 
 
 .. code:: c
       :number-lines: 35
