@@ -835,6 +835,27 @@ XRT provids the API to update and read the runtime paramater of the graph.
 - The API `xrtGraphUpdateRTP`` to update the RTP
 - The API `xrtGraphReadRTP`` to read the RTP. 
 
+.. code-block:: c
+
+     ret = xrtGraphReset(graphHandle);
+     if (ret) throw std::runtime_error("Unable to reset graph");
+
+     ret = xrtGraphRun(graphHandle, 2);
+     if (ret) throw std::runtime_error("Unable to run graph");
+
+     float increment[1] = {1};
+     const char *inVect = reinterpret_cast<const char *>(increment);
+     xrtGraphUpdateRTP(graphHandle, "mm.mm0.in[2]", inVect, sizeof (float));
+     
+     // Do more things
+     
+     float increment_out[1] = {1};
+     char *outVect = reinterpret_cast<char *>(increment_out);
+     xrtGraphReadRTP(graphHandle, "mm.mm0.inout[0]", outVect, sizeof(float));
+     std::cout<<"\n RTP value read<<increment_out[0]; 
+ 
+In the above example, the API ``xrtGraphUpdateRTP`` and ``xrtGraphReadRTP`` are used to update and read the RTP values respectively. Note both the APIs accepts the hierarchical name of the RTL port, pointer to update and read the RTP values, and the size of the RTP value. 
+
 
 
            
