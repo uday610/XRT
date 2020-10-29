@@ -824,7 +824,7 @@ The graph runs infinitely if xrtGraphRun is called with cycle argument -1. While
            xrtGraphEnd(graphHandle,5);  // Forcefully end the graph operation after 5 more cycle starting from NOW
 
 Measuring AIE cycle consumed by the Graph
-*****************************************
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The API ``xrtGraphTimeStamp`` can be used to determine AIE cycle consumed between a graph start and stop. 
 
@@ -849,8 +849,8 @@ Here in this example, the AIE cycle consumed by 3 iteration is calculated
            cout<<"Number of AIE cycles consumed in the 3 iteration is<< end_t-begin_t; 
            
 
-RTP control
-***********
+RTP (Runtime Parameter) control
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 XRT provids the API to update and read the runtime paramater of the graph. 
 
@@ -879,8 +879,11 @@ XRT provids the API to update and read the runtime paramater of the graph.
 In the above example, the API ``xrtGraphUpdateRTP`` and ``xrtGraphReadRTP`` are used to update and read the RTP values respectively. Note both the APIs accepts the hierarchical name of the RTL port, pointer to update and read the RTP values, and the size of the RTP value. 
 
 
-Data transfer from Global Memory
+DMA operation to and from Global Memory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Synchronize the buffer contents between GMIO and AIE.
+XRT provides API ``xrtAIESyncBO`` to synchronize the buffer contents between Global Memory and AIE. The API requires the device handle ``xrtDeviceHandle`` and buffer of type ``xrtBufferHandle`` to perform this operation. The GMIO (global memory IO) name, direction of the transfer, size, offsets are also required for transfereing the data. 
+
+
            
 
