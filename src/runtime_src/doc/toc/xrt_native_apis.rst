@@ -882,7 +882,47 @@ In the above example, the API ``xrtGraphUpdateRTP`` and ``xrtGraphReadRTP`` are 
 DMA operation to and from Global Memory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-XRT provides API ``xrtAIESyncBO`` to synchronize the buffer contents between Global Memory and AIE. The API requires the device handle ``xrtDeviceHandle`` and buffer of type ``xrtBufferHandle`` to perform this operation. The GMIO (global memory IO) name, direction of the transfer, size, offsets are also required for transfereing the data. 
+XRT provides API ``xrtAIESyncBO`` to synchronize the buffer contents between Global Memory and AIE. The following code shows a sample example
+
+
+.. code:: 
+
+       xrtDeviceHandle device_handle = xrtDeviceOpen(0);
+       
+       // Buffer from GM to AIE
+       xrtBufferHandle in_bo_handle  = xrtBOAlloc(device_handle, SIZE * sizeof (float), 0, 0);
+       
+       // Buffer from AIE to GM
+       xrtBufferHandle out_bo_handle  = xrtBOAlloc(device_handle, SIZE * sizeof (float), 0, 0);
+       
+       inp_bo_map = (float *)xrtBOMap(in_bo_handle);
+       out_bo_map = (float *)xrtBOMap(out_bo_handle);
+
+       for (int j = 0; j < SIZE; j++)
+            inp_bo_map[j] = my_float_array[j];
+
+
+       xrtAIESyncBO(device_handle, in_bo_handle, "in_sink", XCL_BO_SYNC_BO_GMIO_TO_AIE, SIZE * sizeof(float),0); 
+
+       xrtAIESyncBO(device_handle, out_bo_handle, "out_sink", XCL_BO_SYNC_BO_AIE_TO_GMIO, SIZE * sizeof(float), 0);
+       
+       
+In the above code shows
+
+    - Input and output buffer (``in_bo_handle`` and ``out_bo_handle``) to the graph is created and mapped to the user space by the buffer related APIs
+    - The API ``xrtAIESyncBO`` is used for data transfer using the following arguments
+    
+          - Device Handle
+          - Buffer Handle
+          - The name of the GMIO port 
+          - The direction of the buffer transfer 
+          
+                   - GMIO to Graph : XCL_BO_SYNC_BO_GMIO_TO_AIE
+                   - Graph to GMIO : XCL_BO_SYNC_BO_AIE_TO_GMIO
+          - The size of the buffer
+          - The offset
+    
+       
 
 
            
