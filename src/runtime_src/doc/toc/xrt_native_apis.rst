@@ -912,15 +912,13 @@ In the above code shows
     - Input and output buffer (``in_bo_handle`` and ``out_bo_handle``) to the graph is created and mapped to the user space by the buffer related APIs
     - The API ``xrtAIESyncBO`` is used for data transfer using the following arguments
     
-          - Device Handle
-          - Buffer Handle
-          - The name of the GMIO port 
+          - Device and Buffer Handle
+          - The name of the GMIO ports associated with the DMA transfer
           - The direction of the buffer transfer 
           
-                   - GMIO to Graph : XCL_BO_SYNC_BO_GMIO_TO_AIE
-                   - Graph to GMIO : XCL_BO_SYNC_BO_AIE_TO_GMIO
-          - The size of the buffer
-          - The offset
+                   - GMIO to Graph : ``XCL_BO_SYNC_BO_GMIO_TO_AIE``
+                   - Graph to GMIO : ``XCL_BO_SYNC_BO_AIE_TO_GMIO``
+          - The size and the offset of the buffer
     
        
 
