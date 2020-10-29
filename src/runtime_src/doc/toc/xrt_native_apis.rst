@@ -708,7 +708,12 @@ Graph execution
 
 XRT provides basic graph execution control APIs to initialize, run, wait, and terminate graphs for a specific number of iterations. Below we will review some of the common graph execution style
 
-**Graph execution for fixed number of iteration and busy wait**
+Graph execution for fixed number of iteration
+*********************************************
+
+A graph can be executed for a fixed number cycle followed by a "busy-wait" or a "time-out wait". 
+
+**Busy Wait scheme**
 
 The graph can be executed for a fixed number of iteration by ``xrtGraphRun`` API using a iteration argument. Subsequently ``xrtGraphWait`` or ``xrtGraphEnd`` API should be used to ensure the graph execution is finished. Remember to use ``xrtGraphWait`` and ``xrtGraphEnd`` API with argument 0. 
 
@@ -736,7 +741,7 @@ Let's review the below example
            xrtGraphEnd(graphHandle,0);  // Use xrtGraphEnd if you are done with the graph execution
 
 
-**Graph wait timeout**
+**Timeout wait scheme**
 
 As shown in the above example xrtGraphWait(graphHandle,0) performs a busy-wait and suspend the execution till the graph is not done. If desired a timeout version of the wait can be achieved by ``xrtGraphWaitDone`` which can be used to wait for some specified number of millisecond, and if the graph is not done do something else in the meantime. An example is shown below
 
@@ -761,7 +766,10 @@ As shown in the above example xrtGraphWait(graphHandle,0) performs a busy-wait a
              }
 
 
-**Infinite Graph Execution**: The graph runs infinitely if xrtGraphRun is called with cycle argument -1. While a graph running infinitely the APIs ``xrtGraphWait``, ``xrtGraphSuspend`` and xrtGrapgEnd can be used to end the graph operation after some number of iteration. The API ``xrtGraphResume`` is used to inoke the infitely running graph again. 
+Infinite Graph Execution
+************************
+
+The graph runs infinitely if xrtGraphRun is called with cycle argument -1. While a graph running infinitely the APIs ``xrtGraphWait``, ``xrtGraphSuspend`` and xrtGraphEnd can be used to end the graph operation after some number of iteration. The API ``xrtGraphResume`` is used to inoke the infitely running graph again. 
 
 - The API ``xrtGraphRun(graphHandle, -1)`` is used to execute the graph infinitely
 - The API ``xrtGraphWait`` is suspending the graph after 3 cycles from the current time when this API is applied
@@ -793,37 +801,13 @@ As shown in the above example xrtGraphWait(graphHandle,0) performs a busy-wait a
            
            xrtGraphEnd(graphHandle,5);  // Forcefully end the graph operation after 5 more cycle starting from NOW
 
+Measuring AIE cycle consumed by the Graph
+*****************************************
 
+The API ``xrtGraphTimeStamp`` can be used to determine AIE cycle consumed between a graph start and stop. 
 
-.. code:: c
-      :number-lines: 35
-           
-           // start from reset state
-           xrtGraphReset(graphHandle);
-           
-           // run the graph for 100 iteration
-           xrtGraphRun(graphHandle, 100);
-           
-            while (1) {
-             auto rval  = xrtGraphWaitDone(graphHandle, 5); 
-              std::cout << "Wait for graph done returns: " << rval << std::endl;
-              if (rval == -ETIME)
-                   std::cout << "Timeout, reenter......" << std::endl;
-              else  // Graph is done, quit the loop
-                  break;
-             }
-
-           
-         
-           
-
-
-
-The graph suspend and resume function
-
-    - xrtGraphSuspend
-    - xrtGraphResume
-    
+Here in this example, the AIE cycle consumed by 3 iteration is calculated
+ 
 
 .. code:: c
       :number-lines: 35
@@ -843,6 +827,15 @@ The graph suspend and resume function
            cout<<"Number of AIE cycles consumed in the 3 iteration is<< end_t-begin_t; 
            
 
-           
+RTP control
+***********
+
+XRT provids the API to update and read the runtime paramater of the graph. 
+
+- The API `xrtGraphUpdateRTP`` to update the RTP
+- The API `xrtGraphReadRTP`` to read the RTP. 
+
+
+
            
 
