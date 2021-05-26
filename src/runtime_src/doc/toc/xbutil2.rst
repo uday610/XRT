@@ -57,7 +57,7 @@ The ``xbutil program`` command downloads a specified xclbin binary to the progra
 xbutil validate
 ~~~~~~~~~~~~~~~
 
-The command ``xbutil validate`` validates the card installation by running precompiled basic tests. 
+The command ``xbutil validate`` validates the installed card by running precompiled basic tests. 
 
 **The supported options**
 
@@ -117,7 +117,7 @@ The command ``xbutil validate`` validates the card installation by running preco
 xbutil examine 
 ~~~~~~~~~~~~~~
 
-The command ``xbutil examine``  can be used to find the details of the specific device(s),
+The command ``xbutil examine``  can be used to find the details of the specific device,
 
 
 **The supported options**
