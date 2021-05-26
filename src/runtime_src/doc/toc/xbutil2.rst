@@ -15,7 +15,6 @@ The xbutil command options are
     - ``xbutil validate``
     - ``xbutil examine``
     - ``xbutil reset``
-    - ``xbutil advanced`` 
 
 
 xbutil program
@@ -129,29 +128,33 @@ The command ``xbutil examine``  can be used to find the details of the specific 
 
 - The ``--device`` (or ``-d``) specifies the target device to be validate 
     
-    - <none> : Optional for a single device system. 
-    - <user bdf>+ : Mandetory for multiple device system, has to be specified with one or more device user bdf information 
-    - ``all``:To specify all devices ``–-device all``  or ``-d all``  can be used
+    - <user bdf> :  The Bus:Device.Function of the device of interest
 - The ``--report`` (or ``-r``) switch can be used to view specific report(s) of interest from the following options
           
-    - ``scan`` (**default**): Shows System Configuration, XRT and Device user bdf information. 
     - ``aie``: Reports AIE kernels metadata from the .xclbin
-    - ``electrical``: Reports  Electrical and power sensors present on the device
+    - ``aieshim``: Reports AIE shim tile status
+    - ``all``: All known reports are generated
     - ``debug-ip-status``: Reports information related to Debug-IPs inserted during the kernel compilation
+    - ``dynamic-regions``: Information about the xclbin and the compute units (default when ``--device`` is provided)
+    - ``electrical``: Reports  Electrical and power sensors present on the device
+    - ``error``: Asyncronus Error present on the device
     - ``firewall``: Reports the current firewall status
-    - ``host``: Reports the host configuration and drivers
-    - ``fan``: Reports fans present on the device
+    - ``host``: Reports the host configuration and drivers (default when ``--device`` is not provided)
+    - ``mailbox``: Mailbox metrics of the device
+    - ``mechanical``: Mechanical sensors on and surrounding the device
     - ``memory``: Reports memory topology of the XCLBIN (if XCLBIN is already loaded) 
+    - ``pcie-info`` : Pcie information of the device
+    - ``platform``: Platforms flashed on the device
+    - ``qspi-status``: QSPI write protection status
     - ``thermal``: Reports thermal sensors present on the device
-    - ``verbose``: Reports everything
-- The ``--format`` (or ``-f``) can be used to specify the output format
-    
-    - ``text`` (**default**): The output is shown in the text format, default behavior
-    - ``json``: The output is shown in json-2020.2 
 
-- The ``--output`` (or ``-o``) can be used to dump output in a file instead of stdout
-        
-    - <filename> : The output file to be dumped
+- The ``--format`` (or ``-f``) specifies the report format. Note that ``--format`` also needs an ``--output`` to dump the report in json format. If ``--output`` is missing text formt will be shown in stdout
+    
+    - ``JSON``: The report is shown in latest JSON schema
+    - ``JSON-2020.2``: The report is shown in JSON 2020.2 schema
+
+- The ``--output`` (or ``-o``) spcifies the output file to direct the output
+
 
 
 **Example commands**
@@ -163,11 +166,12 @@ The command ``xbutil examine``  can be used to find the details of the specific 
     xbutil examine
  
  
-    # Examine a specific device and report electrical information in the stdout
-    xbutil examine --device 0000:d8:00.0 --run electrical
+    # Reports electrical information in the stdout
+    xbutil examine --device 0000:b3:00.1 --report electrical
  
-    # Example a list of devices and reports a list of information and dump in a file json format
-    xbutil examine --device 0000:d8:00.0 0000:d8:00.1 --run electrical firewall --format json --output my_reports.json
+    # Reports "electrical" and "firewall" and dump in json format
+    xbutil examine --device 0000:b3:00.1  --report electrical firewall --format JSON --output n.json
+
  
  
 xbutil reset
@@ -202,90 +206,6 @@ This ``xbutil reset`` command can be used to reset one or more devices.
     
 
 
-xbutil advanced
-~~~~~~~~~~~~~~~
-
-The ``xbutil advanced`` commands are the group of commands only recommended for the advanced users. 
-
-As a disclaimer, the formats of these commands can change significantly as we know more about the advnced use-cases. 
-
-**The supported options**
-
-Read from Memory
-
-.. code-block:: 
-
-    xbutil advanced [--device| -d] <user bdf> --read-mem <address> <size> [--output] <output file>
-
-Fill Memory with binary value
-
-.. code-block:: 
-
-    xbutil advanced [--device| -d] <user bdf> --write-mem <address> <size> [--fill] <binary data> 
-
-
-Fill Memory from a file content
-
-.. code-block:: 
-
-    xbutil advanced [--device| -d] <user bdf> --write-mem <address> <size>  [--input] <file>
-
-
-P2P Enable, disable or valiadte
-
-.. code-block:: 
-
-    xbutil advanced [--device| -d] <user bdf> --p2p [enable|disable|validate]
-
-
-
-**The details of the supported options**
-
-
-- The ``--device`` (or ``-d``) used to specify the device to be reset
-    
-    - <user bdf>+ : Mandetory, has to be specified with one or more device user bdf  
-    - ``all``: To specify all devices ``–-device all``  or ``-d all``  can be used
-- The ``--read-mem`` is used to read from perticular memory location. It has to use with following arguments
-    
-    - <address> <number of bytes> : The read location and the size of the read. 
-- The ``--output`` can be used with ``--read-mem`` to dump the read data to a file instead of console
-    
-    - <filename> : When specified the output of ``--read-mem`` commands are dumped into the user provided file
-- The ``--write-mem`` is used to write to the perticular memory location. It has to use with following arguments
-    
-    - <address> <number of bytes> : The write location and the size of the write. 
-- The ``--fill`` can be used with ``--write-mem`` to fill the memory location with a perticular binary value
-        
-    - <uint8> : The filled value in byte
-- The ``--input`` can be used with ``--write-mem`` to write the memory location from a file content
-        
-    - <binary file> : The binary file 
-- The ``--p2p`` can be used to enable, disable or validate p2p operation
-
-    - enable: Enable the p2p
-    - disable: Disable the p2p
-    - validate: Validate the p2p
-        
-
-**Example commands**
-
-
-.. code-block::
- 
-    xbutil advanced --device 0000:65:00.1 --read-mem 0x100 0x30
-    
-    xbutil advanced --device 0000:65:00.1 --read-mem 0x100 0x30 --output foo.bin
-    
-    xbutil advanced --device 0000:65:00.1 --write-mem 0x100 0x10 --fill 0xAA
-    
-    xbutil advanced --device 0000:65:00.1 --write-mem 0x100 0x20 --input foo.bin
-    
-    xbutil advanced --device 0000:65:00.1 --p2p enable
-    
-    xbutil advanced --device 0000:65:00.1 --p2p disble
-    
-    xbutil advanced --device 0000:65:00.1 --p2p validate
     
     
     
