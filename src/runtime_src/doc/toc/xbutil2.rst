@@ -144,7 +144,7 @@ The command ``xbutil examine``  can be used to find the details of the specific 
     - ``mechanical``: Mechanical sensors on and surrounding the device
     - ``memory``: Reports memory topology of the XCLBIN (if XCLBIN is already loaded) 
     - ``pcie-info`` : Pcie information of the device
-    - ``platform``: Platforms flashed on the device
+    - ``platform``: Platforms flashed on the device (default when ``--device`` is provided)
     - ``qspi-status``: QSPI write protection status
     - ``thermal``: Reports thermal sensors present on the device
 
