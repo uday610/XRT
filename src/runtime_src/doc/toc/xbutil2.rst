@@ -42,19 +42,18 @@ The ``xbutil program`` command downloads a specified xclbin binary to the progra
 
 .. code-block:: 
 
-    xbutil program [--device|-d] <user bdf> [--program|-p] <xclbin>
+    xbutil program [--device|-d] <user bdf> [--user|-u] <xclbin>
 
 
 **The details of the supported options**
 
 - The ``--device`` (or ``-d``) specifies the target device to be programmed
     
-    - <none> : Optional for a single device system. 
-    - <user bdf>+ : Mandetory for multiple device system, has to be specified with one or more device user bdf information 
-    - ``all``: To specify all devices ``–-device all``  or ``-d all``  can be used 
-- The ``--program`` (or ``-p``) is required to specify the .xclbin file
+    - <user bdf> :  The Bus:Device.Function device of interest
     
-    - <xclbin file> : The xclbin file to be used to program the device
+- The ``--user`` (or ``-u``) is required to specify the .xclbin file
+    
+    - <xclbin file> : The xclbin file with full-path to be used to program the device
 
 
 **Example commands** 
