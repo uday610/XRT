@@ -18,20 +18,6 @@ The xbutil command options are
     - ``xbutil advanced`` 
 
 
-**A note about multidevice system**: All the ``xbutil`` command supports a ``--device`` (or ``-d``) switch to specify the target device of interest. The ``xbutil`` command accept the PCIe user function bdf as an argument of ``--device`` switch. The user can check the user function bdf from ``xbutil examine`` command.
-
-.. code:: 
-
-    xbutil examine
-    ....
-    ....
-    Devices present
-    [0000:b3:00.1] : xilinx_u200_xdma_201830_2
-    [0000:65:00.1] : xilinx_u50_gen3x16_xdma_201920_3
-
-
-The above output shows two devices and their user function bdf (``0000:b3:00.1`` and ``0000:65:00.1``) can be used with the ``--device`` switch
-
 xbutil program
 ~~~~~~~~~~~~~~
 
@@ -49,7 +35,7 @@ The ``xbutil program`` command downloads a specified xclbin binary to the progra
 
 - The ``--device`` (or ``-d``) specifies the target device to be programmed
     
-    - <user bdf> :  The Bus:Device.Function device of interest
+    - <user bdf> :  The Bus:Device.Function of the device of interest
     
 - The ``--user`` (or ``-u``) is required to specify the .xclbin file
     
@@ -81,7 +67,7 @@ The command ``xbutil validate`` validates the card installation by running preco
 
 - The ``--device`` (or ``-d``) specifies the target device to be validate 
     
-    - <user bdf> :  The Bus:Device.Function device of interest
+    - <user bdf> :  The Bus:Device.Function of the device of interest
 
 - The ``--run`` (or ``-r``) specifies the perticular test to execute
         
@@ -98,7 +84,7 @@ The command ``xbutil validate`` validates the card installation by running preco
     - ``Host memory bandwidth test``: Run 'bandwidth kernel' when host memory is enabled
     - ``bist``: Run BIST test
     - ``vcu``: Run decoder test (only applicable for specific platform). 
-    - ``quick``: Run first five tests (Kernel version, Aux connection, PCIE link, SC version and Verify kernel)   
+    - ``quick``: Run first four tests (Aux connection, PCIE link, SC version and Verify kernel)   
   
 - The ``--format`` (or ``-f``) specifies the report format. Note that ``--format`` also needs an ``--output`` to dump the report in json format. If ``--output`` is missing text formt will be shown in stdout
     
