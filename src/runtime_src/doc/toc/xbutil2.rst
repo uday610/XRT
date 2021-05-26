@@ -81,18 +81,17 @@ The command ``xbutil validate`` validates the card installation by running preco
 
 - The ``--device`` (or ``-d``) specifies the target device to be validate 
     
-    - <none> : Optional for a single device system. 
-    - <user bdf>+ : Mandetory for multiple device system, has to be specified with one or more device user bdf information 
-    - ``all``: To specify all devices ``–-device all``  or ``-d all``  can be used
+    - <user bdf> :  The Bus:Device.Function device of interest
+
 - The ``--run`` (or ``-r``) specifies the perticular test to execute
         
     - ``all`` (**default**): runs all the tests listed below
-    - ``Kernel version``: Check if the kernel version is supported by XRT
     - ``Aux connection``: Check if auxiliary power is connected
     - ``PCIE link``: Check if PCIE link is active
     - ``SC version``: Check if SC firmware is up-to-date
     - ``Verify kernel``: Run 'Hello World' kernel test
     - ``DMA``: Run dma test
+    - ``iops``: Run test to measuring performance of hardware scheduler (simple `hello world` kernel execution frequency)
     - ``Bandwidth kernel``: Run 'bandwidth kernel' and check the throughput
     - ``Peer to peer bar``: Run P2P test
     - ``Memory to memory DMA``: Run M2M test
