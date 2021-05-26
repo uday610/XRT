@@ -61,18 +61,8 @@ The ``xbutil program`` command downloads a specified xclbin binary to the progra
 
 .. code-block:: 
 
-    #Programming a only available device with a xclbin 
-    xbutil program --program my_kernel.xclbin
+     xbutil program --device 0000:03:00.1 --program ./my_kernel.xclbin
  
-    #Multiple Devices, program all the devices
-    xbutil program --device all --program my_kernel.xclbin
- 
-    #Multiple Device, programing a single device
-    xbutil program --device 0000:03:00.1 --program my_kernel.xclbin
- 
-    #Multiple Device, programing two devices
-    xbutil program --device 0000:03:00.1 0000:d8:00.1 --program my_kernel.xclbin
-
 
 xbutil validate
 ~~~~~~~~~~~~~~~
