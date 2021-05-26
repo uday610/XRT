@@ -177,7 +177,7 @@ The command ``xbutil examine``  can be used to find the details of the specific 
  
 xbutil reset
 ~~~~~~~~~~~~
-This ``xbutil reset`` command can be used to reset one or more devices. 
+This ``xbutil reset`` command can be used to reset device. 
 
 **The supported options**
 
@@ -187,12 +187,11 @@ This ``xbutil reset`` command can be used to reset one or more devices.
 
 **The details of the supported options**
 
-
-- The ``--device`` (or ``-d``) used to specify the device to be reset
+- The ``--device`` (or ``-d``) specifies the target device to be validate 
     
-    - <user bdf>+ : Mandetory, has to be specified with one or more device user bdf  
-    - ``all``: To specify all devices ``–-device all``  or ``-d all``  can be used
-- The ``--type`` (or ``-t``) can be used to specify the reset type. Currently supported reset type
+    - <user bdf> :  The Bus:Device.Function of the device of interest
+    
+- The ``--type`` (or ``-t``) can be used to specify the reset type. Currently only supported reset type is
     
     - ``hot`` (**default**): Complete reset of the device
 
@@ -203,8 +202,7 @@ This ``xbutil reset`` command can be used to reset one or more devices.
  
     xbutil reset --device 0000:65:00.1
     
-    xbutil reset --device 0000:65:00.1 --type hot
-    
+   
 
 
     
