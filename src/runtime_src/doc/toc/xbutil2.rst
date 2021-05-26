@@ -61,7 +61,7 @@ The ``xbutil program`` command downloads a specified xclbin binary to the progra
 
 .. code-block:: 
 
-     xbutil program --device 0000:03:00.1 --program ./my_kernel.xclbin
+     xbutil program --device 0000:b3:00.1 --user ./my_kernel.xclbin
  
 
 xbutil validate
@@ -91,7 +91,7 @@ The command ``xbutil validate`` validates the card installation by running preco
     - ``SC version``: Check if SC firmware is up-to-date
     - ``Verify kernel``: Run 'Hello World' kernel test
     - ``DMA``: Run dma test
-    - ``iops``: Run test to measuring performance of hardware scheduler (simple `hello world` kernel execution frequency)
+    - ``iops``: Run test to measure performance of scheduler (simple `hello world` kernel execution frequency)
     - ``Bandwidth kernel``: Run 'bandwidth kernel' and check the throughput
     - ``Peer to peer bar``: Run peer-to-peer test
     - ``Memory to memory DMA``: Run zero copy memory to memory data transfer test
@@ -100,7 +100,7 @@ The command ``xbutil validate`` validates the card installation by running preco
     - ``vcu``: Run decoder test (only applicable for specific platform). 
     - ``quick``: Run first five tests (Kernel version, Aux connection, PCIE link, SC version and Verify kernel)   
   
-- The ``--format`` (or ``-f``) specifies the report format
+- The ``--format`` (or ``-f``) specifies the report format. Note that ``--format`` also needs an ``--output`` to dump the report in json format. If ``--output`` is missing text formt will be shown in stdout
     
     - ``JSON``: The report is shown in latest JSON schema
     - ``JSON-2020.2``: The report is shown in JSON 2020.2 schema
@@ -114,13 +114,13 @@ The command ``xbutil validate`` validates the card installation by running preco
 .. code-block:: 
 
     # Run all the tests 
-    xbutil validate
+    xbutil validate --device 0000:b3:00.1
  
-    # Run "DMA" test
-    xbutil valiadate --device 0000:d8:00.1 --run DMA
+    # Run "DMA" test, produce text output in stdout
+    xbutil validate --device 0000:b3:00.1 --run DMA
  
     # Run "DMA" and "Validate Kernel" test and generates Json format
-    xbutil validate --device 0000:d8:00.1 --run DMA "Verify Kernel" --format JSON --output xyz.json
+    xbutil validate --device 0000:b3:00.1 --run DMA "Verify Kernel" --format JSON --output xyz.json
 
 
 xbutil examine 
