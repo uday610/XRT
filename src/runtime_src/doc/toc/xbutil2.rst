@@ -77,7 +77,7 @@ The command ``xbutil validate`` validates the card installation by running preco
     - ``SC version``: Check if SC firmware is up-to-date
     - ``Verify kernel``: Run 'Hello World' kernel test
     - ``DMA``: Run dma test
-    - ``iops``: Run test to measure performance of scheduler (simple `hello world` kernel execution frequency)
+    - ``iops``: Run test to measure performance of scheduler (number of `hello world` kernel execution per second)
     - ``Bandwidth kernel``: Run 'bandwidth kernel' and check the throughput
     - ``Peer to peer bar``: Run peer-to-peer test
     - ``Memory to memory DMA``: Run zero copy memory to memory data transfer test
