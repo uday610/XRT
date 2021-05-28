@@ -168,9 +168,8 @@ The command ``xbutil examine``  can be used to find the details of the specific 
 
 .. code-block:: shell
 
-    # Examine all the devices and produces all the reports
+    # Shows ``xbutil examine --host``
     xbutil examine
- 
  
     # Reports electrical information in the stdout
     xbutil examine --device 0000:b3:00.1 --report electrical
