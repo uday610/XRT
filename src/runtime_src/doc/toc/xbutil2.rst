@@ -74,7 +74,7 @@ The command ``xbutil validate`` validates the installed card by running precompi
     
     - <user bdf> :  The Bus:Device.Function of the device of interest
 
-- The ``--run`` (or ``-r``) specifies the perticular test to execute
+- The ``--run`` (or ``-r``) specifies the perticular test(s) to execute
         
     - ``all`` (**default**): runs all the tests listed below
     - ``Aux connection``: Check if auxiliary power is connected
