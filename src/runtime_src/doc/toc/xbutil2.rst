@@ -37,7 +37,7 @@ The ``xbutil program`` command downloads a specified xclbin binary to the progra
 
 **The details of the supported options**
 
-- The ``--device`` (or ``-d``) specifies the target device to be programmed
+- The ``--device`` (or ``-d``) specifies the target device to program
     
     - <user bdf> :  The Bus:Device.Function of the device of interest
     
@@ -70,7 +70,7 @@ The command ``xbutil validate`` validates the installed card by running precompi
 
 **The details of the supported options**
 
-- The ``--device`` (or ``-d``) specifies the target device to be validate 
+- The ``--device`` (or ``-d``) specifies the target device to validate 
     
     - <user bdf> :  The Bus:Device.Function of the device of interest
 
@@ -132,7 +132,7 @@ The command ``xbutil examine``  can be used to find the details of the specific 
 **The details of the supported options**
 
 
-- The ``--device`` (or ``-d``) specifies the target device to be validate 
+- The ``--device`` (or ``-d``) specifies the target device to examine 
     
     - <user bdf> :  The Bus:Device.Function of the device of interest
 - The ``--report`` (or ``-r``) switch can be used to view specific report(s) of interest from the following options
@@ -191,7 +191,7 @@ This ``xbutil reset`` command can be used to reset device.
 
 **The details of the supported options**
 
-- The ``--device`` (or ``-d``) specifies the target device to be validate 
+- The ``--device`` (or ``-d``) specifies the target device to reset 
     
     - <user bdf> :  The Bus:Device.Function of the device of interest
     
