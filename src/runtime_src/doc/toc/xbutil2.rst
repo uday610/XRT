@@ -3,18 +3,18 @@
 xbutil (Next Generation)
 ========================
 
-The next generation of the ``xbutil`` command-line tool is now default from 21.1 release.  
+This document describes the new next-generation ``xbutil`` commands. These new commands are default from 21.1 release.   
 
-P.S: Legacy version of the tool is still available and can be invoked by ``xbutil --legacy``.
+P.S: Legacy ``xbutil`` commands are still available and can be invoked by ``xbutil --legacy <command>``.
 
 
-**Global options**: These are the global options can be used with any command options. 
+**Global options**: These are the global options can be used with any command. 
 
  - ``--verbose``: Turn on verbosity and shows more outputs whenever applicable
  - ``--batch``: Enable batch mode
  - ``--force``: When possible, force an operation
 
-The xbutil command options are
+The next-generation ``xbutil`` commands are
 
     - ``xbutil program``
     - ``xbutil validate``
