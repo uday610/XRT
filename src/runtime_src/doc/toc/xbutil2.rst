@@ -30,7 +30,7 @@ The ``xbutil program`` command downloads a specified xclbin binary to the progra
 **The supported options**
 
 
-.. code-block:: 
+.. code-block:: shell
 
     xbutil program [--device|-d] <user bdf> [--user|-u] <xclbin>
 
@@ -49,7 +49,7 @@ The ``xbutil program`` command downloads a specified xclbin binary to the progra
 **Example commands** 
 
 
-.. code-block:: 
+.. code-block:: shell
 
      xbutil program --device 0000:b3:00.1 --user ./my_kernel.xclbin
  
@@ -62,7 +62,7 @@ The command ``xbutil validate`` validates the installed card by running precompi
 **The supported options**
 
 
-.. code-block:: 
+.. code-block:: shell
 
    xbutil validate [--device| -d] <user bdf> [--run| -r] <test> [--format| -f] <report format> [--output| -o] <filename>
  
@@ -102,7 +102,7 @@ The command ``xbutil validate`` validates the installed card by running precompi
 **Example commands**
 
 
-.. code-block:: 
+.. code-block:: shell
 
     # Run all the tests 
     xbutil validate --device 0000:b3:00.1
@@ -123,7 +123,7 @@ The command ``xbutil examine``  can be used to find the details of the specific 
 **The supported options**
 
 
-.. code-block:: 
+.. code-block:: shell
 
     xbutil examine [--device|-d] <user bdf> [--report| -r] <report of interest> [--format| -f] <report format> [--output| -o] <filename>
  
@@ -166,7 +166,7 @@ The command ``xbutil examine``  can be used to find the details of the specific 
 **Example commands**
 
 
-.. code-block:: 
+.. code-block:: shell
 
     # Examine all the devices and produces all the reports
     xbutil examine
@@ -186,7 +186,7 @@ This ``xbutil reset`` command can be used to reset device.
 
 **The supported options**
 
-.. code-block:: 
+.. code-block:: shell
 
     xbutil reset [--device| -d] <user bdf> [--type| -t] <reset type>
 
@@ -203,7 +203,7 @@ This ``xbutil reset`` command can be used to reset device.
 **Example commands**
 
 
-.. code-block::
+.. code-block:: shell
  
     xbutil reset --device 0000:65:00.1
     
