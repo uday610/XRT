@@ -43,7 +43,7 @@ The ``xbutil program`` command downloads a specified xclbin binary to the progra
     
 - The ``--user`` (or ``-u``) is required to specify the .xclbin file
     
-    - <xclbin file> : The xclbin file with full-path to be used to program the device
+    - <xclbin file> : The xclbin file with full-path to program the device
 
 
 **Example commands** 
